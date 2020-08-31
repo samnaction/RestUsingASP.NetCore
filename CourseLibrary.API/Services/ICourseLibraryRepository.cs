@@ -1,6 +1,7 @@
 ﻿namespace CourseLibrary.API.Services
 {
     using CourseLibrary.API.Entities;
+    using CourseLibrary.API.Helpers;
     using CourseLibrary.API.ResourceParameters;
     using System;
     using System.Collections.Generic;
@@ -19,7 +20,7 @@
 
         IEnumerable<Author> GetAuthors();
 
-        IEnumerable<Author> GetAuthors(AuthorsResourceParameters authorsResourceParameters);
+        PagedList<Author> GetAuthors(AuthorsResourceParameters authorsResourceParameters);
 
         Author GetAuthor(Guid authorId);
 

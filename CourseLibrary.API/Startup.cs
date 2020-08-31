@@ -31,41 +31,44 @@ namespace CourseLibrary.API
            {
                setupAction.ReturnHttpNotAcceptable = true;
            })
-                .AddNewtonsoftJson (setupAction => setupAction.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver())
+                .AddNewtonsoftJson(setupAction => setupAction.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver())
                 .AddXmlDataContractSerializerFormatters()
-                .ConfigureApiBehaviorOptions( setupAction => {
-               setupAction.InvalidModelStateResponseFactory = context =>
-               {
-                   var problemDetailsFactory = context.HttpContext.RequestServices.GetRequiredService<ProblemDetailsFactory>();
-                   var problemDetails = problemDetailsFactory.CreateValidationProblemDetails(context.HttpContext, context.ModelState);
+                .ConfigureApiBehaviorOptions(setupAction =>
+                {
+                    setupAction.InvalidModelStateResponseFactory = context =>
+                    {
+                        var problemDetailsFactory = context.HttpContext.RequestServices.GetRequiredService<ProblemDetailsFactory>();
+                        var problemDetails = problemDetailsFactory.CreateValidationProblemDetails(context.HttpContext, context.ModelState);
 
-                   problemDetails.Detail = "See the errors field for details";
-                   problemDetails.Instance = context.HttpContext.Request.Path;
+                        problemDetails.Detail = "See the errors field for details";
+                        problemDetails.Instance = context.HttpContext.Request.Path;
 
-                   var actionExecutingContext = context as Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext;
+                        var actionExecutingContext = context as Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext;
 
-                   if((context.ModelState.ErrorCount > 0) &&
-                   (actionExecutingContext ?.ActionArguments.Count == context.ActionDescriptor.Parameters.Count))
-                   {
-                       problemDetails.Type = "https://courselibrary.com/modelvalidationproblem";
-                       problemDetails.Status = StatusCodes.Status422UnprocessableEntity;
-                       problemDetails.Title = "One or more validation errors occured.";
+                        if ((context.ModelState.ErrorCount > 0) &&
+                        (actionExecutingContext?.ActionArguments.Count == context.ActionDescriptor.Parameters.Count))
+                        {
+                            problemDetails.Type = "https://courselibrary.com/modelvalidationproblem";
+                            problemDetails.Status = StatusCodes.Status422UnprocessableEntity;
+                            problemDetails.Title = "One or more validation errors occured.";
 
-                       return new UnprocessableEntityObjectResult(problemDetails)
-                       {
-                           ContentTypes = { "application/problem+json"}
-                       };
-                   }
+                            return new UnprocessableEntityObjectResult(problemDetails)
+                            {
+                                ContentTypes = { "application/problem+json" }
+                            };
+                        }
 
-                   problemDetails.Status = StatusCodes.Status400BadRequest;
-                   problemDetails.Title = "One or more errors on input occured.";
-                   return new UnprocessableEntityObjectResult(problemDetails)
-                   {
-                       ContentTypes = { "application/problem+json" }
-                   };
-               };
-           });
+                        problemDetails.Status = StatusCodes.Status400BadRequest;
+                        problemDetails.Title = "One or more errors on input occured.";
+                        return new UnprocessableEntityObjectResult(problemDetails)
+                        {
+                            ContentTypes = { "application/problem+json" }
+                        };
+                    };
+                });
 
+            //register ProprtyMappingService
+            services.AddTransient<IPropertyMappingService, PropertyMappingService>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
