@@ -67,6 +67,9 @@ namespace CourseLibrary.API
                     };
                 });
 
+            //register PropertyCheckerService
+            services.AddTransient<IPropertyCheckerService, PropertyCheckerService>();
+
             //register ProprtyMappingService
             services.AddTransient<IPropertyMappingService, PropertyMappingService>();
 
