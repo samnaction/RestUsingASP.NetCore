@@ -814,7 +814,7 @@
 				"header": [
 					{
 						"key": "Accept",
-						"value": "application/vnd.marvin.hateoas+json"
+						"value": "application/vnd.sameer.hateoas+json"
 					}
 				],
 				"url": {
@@ -840,7 +840,7 @@
 				"header": [
 					{
 						"key": "Accept",
-						"value": "application/vnd.marvin.author.full+json"
+						"value": "application/vnd.sameer.author.full+json"
 					}
 				],
 				"url": {
@@ -866,7 +866,7 @@
 				"header": [
 					{
 						"key": "Accept",
-						"value": "application/vnd.marvin.author.full.hateoas+json"
+						"value": "application/vnd.sameer.author.full.hateoas+json"
 					}
 				],
 				"url": {
@@ -892,7 +892,7 @@
 				"header": [
 					{
 						"key": "Accept",
-						"value": "application/vnd.marvin.author.friendly+json"
+						"value": "application/vnd.sameer.author.friendly+json"
 					}
 				],
 				"url": {
@@ -918,7 +918,7 @@
 				"header": [
 					{
 						"key": "Accept",
-						"value": "application/vnd.marvin.author.friendly.hateoas+json"
+						"value": "application/vnd.sameer.author.friendly.hateoas+json"
 					}
 				],
 				"url": {
@@ -971,13 +971,13 @@
 			"response": []
 		},
 		{
-			"name": "POST Author (application/vnd.marvin.authorforcreation+json)",
+			"name": "POST Author (application/vnd.sameer.authorforcreation+json)",
 			"request": {
 				"method": "POST",
 				"header": [
 					{
 						"key": "Content-Type",
-						"value": "application/vnd.marvin.authorforcreation+json"
+						"value": "application/vnd.sameer.authorforcreation+json"
 					},
 					{
 						"key": "Accept",
@@ -1004,13 +1004,13 @@
 			"response": []
 		},
 		{
-			"name": "POST Author with Date of Death (application/vnd.marvin.authorforcreationwithdateofdeath+json)",
+			"name": "POST Author with Date of Death (application/vnd.sameer.authorforcreationwithdateofdeath+json)",
 			"request": {
 				"method": "POST",
 				"header": [
 					{
 						"key": "Content-Type",
-						"value": "application/vnd.marvin.authorforcreationwithdateofdeath+json"
+						"value": "application/vnd.sameer.authorforcreationwithdateofdeath+json"
 					},
 					{
 						"key": "Accept",

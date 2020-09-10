@@ -20,6 +20,8 @@
         [Required]
         public DateTimeOffset DateOfBirth { get; set; }
 
+        public DateTimeOffset ? DateOfDeath { get; set; }
+
         [Required]
         [MaxLength(50)]
         public string MainCategory { get; set; }

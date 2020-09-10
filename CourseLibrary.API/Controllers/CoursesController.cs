@@ -17,9 +17,9 @@
     [ApiController]
     public class CoursesController : ControllerBase
     {
-        private ICourseLibraryRepository _courseLibraryRepository;
+        private readonly ICourseLibraryRepository _courseLibraryRepository;
 
-        private IMapper _mapper;
+        private readonly IMapper _mapper;
 
         public CoursesController(ICourseLibraryRepository courseLibraryRepository, IMapper mapper)
         {

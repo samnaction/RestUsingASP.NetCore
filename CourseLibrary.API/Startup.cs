@@ -2,11 +2,13 @@ namespace CourseLibrary.API
 {
     using AutoMapper;
     using CourseLibrary.API.DbContexts;
+    using CourseLibrary.API.Helpers;
     using CourseLibrary.API.Services;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Formatters;
     using Microsoft.AspNetCore.Mvc.Infrastructure;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
@@ -14,6 +16,7 @@ namespace CourseLibrary.API
     using Microsoft.Extensions.Hosting;
     using Newtonsoft.Json.Serialization;
     using System;
+    using System.Linq;
 
     public class Startup
     {
@@ -31,7 +34,8 @@ namespace CourseLibrary.API
            {
                setupAction.ReturnHttpNotAcceptable = true;
            })
-                .AddNewtonsoftJson(setupAction => setupAction.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver())
+                .AddNewtonsoftJson(setupAction => setupAction.SerializerSettings.ContractResolver = 
+                new CamelCasePropertyNamesContractResolver())
                 .AddXmlDataContractSerializerFormatters()
                 .ConfigureApiBehaviorOptions(setupAction =>
                 {
@@ -66,6 +70,15 @@ namespace CourseLibrary.API
                         };
                     };
                 });
+
+            services.Configure<MvcOptions>( config => {
+                var newtonsoftJsonOutputFormatter = config.OutputFormatters.OfType<NewtonsoftJsonOutputFormatter>()?
+                .FirstOrDefault();
+                if(newtonsoftJsonOutputFormatter != null)
+                {
+                    newtonsoftJsonOutputFormatter.SupportedMediaTypes.Add(Const.HateoasJson);
+                }
+            });
 
             //register PropertyCheckerService
             services.AddTransient<IPropertyCheckerService, PropertyCheckerService>();
